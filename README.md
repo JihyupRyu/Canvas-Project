@@ -1,5 +1,5 @@
 # Canvas-Project
-This is my first group project after 2 weeks in bootcamp.
+This is my first group project started 3 weeks after beginning bootcamp.
 
 We used HTML built-in canvas tag to build a paint application like Microsoft Paint. [Wikipedia](https://en.wikipedia.org/wiki/Microsoft_Paint)
 
