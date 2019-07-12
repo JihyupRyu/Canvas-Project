@@ -1,0 +1,260 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" 
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> <!-- boot toggle-->
+        <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" 
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" 
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css">
+        <link href="style.css" rel="stylesheet" type='text/css'>
+    </head>
+    <body>
+        <section id="top-board">
+        </section>
+        <section id="canvas-container">
+
+            <!-- height & width are 2 px less per side for 2 px border.  Must adjust with border. -->
+
+            <canvas id="canvas-real" class="canvas-board" width='1196px' height='676px'></canvas>
+            <canvas id="canvas-draft" class="canvas-board" width='1196px' height='676px'></canvas>
+            
+        </section>
+        <section id="control-panel">
+            <div id = "shape-buttons">
+                <button type = 'button' class = 'btn btn-primary btn-circle-l' id = 'draw-rectangle'><i class='fa fa-square'></i></button>
+                <button type = 'button' class = 'btn btn-info btn-circle-l' id = 'draw-pen'><i class= 'fa fa-paint-brush'></i></button>
+                <button type = 'button' class = 'btn btn-success btn-circle-l' id = 'draw-circle'><i class= 'fa fa-circle'></i></button>
+                <button type = 'button' class = 'btn btn-warning btn-circle-l' id = 'draw-line'><i class= 'fa fa-minus'></i></button>
+                <button type = 'button' class = 'btn self-made btn-circle-l' id = 'text-button'><i class= 'fas fa-font'></i></button> 
+                <button type = 'button' class = 'btn self-made btn-circle-l' id = 'curve-button'><i class= 'fas fa-bezier-curve'></i></button>  
+                <button type = 'button' class = 'btn self-made btn-circle-l ' id = 'draw-polygon'><i class="fas fa-draw-polygon"></i></button>
+                <button type = 'button' class = 'btn self-made btn-circle-l ' id = 'fill-bucket'><i class="fas fa-fill-drip"></i></button>
+                <button type = 'button' class = 'btn btn-danger btn-circle-l' id = 'draw-emoji'><i class="far fa-grin-tears"></i></button>
+                <button type = 'button' class = 'btn self-made btn-circle-l' id = 'filter-button'><i class= 'fas fa-filter'></i></button> 
+            </div>
+            <div id = functional-buttons>
+                <button type = 'button' class = 'btn self-made btn-square-l' id = 'undo-button'><i class='fa fa-undo'></i></button>
+                <button type = 'button' class = 'btn self-made btn-square-l' id = 'redo-button'><i class= 'fa fa-redo'></i></button>
+                <button type = 'button' class = 'btn self-made btn-square-l' id = 'selector-button'><i class="far fa-object-ungroup"></i></button>
+                <button type = 'button' class = 'btn self-made btn-square-l' id = 'zoom-in'><i class="fas fa-search-plus"></i></button>
+                <button type = 'button' class = 'btn self-made btn-square-l' id = 'zoom-out'><i class= 'fas fa-search-minus'></i></button>               
+                <button type = 'button' class = 'btn self-made btn-square-l' id = 'clear-button'><i class= 'far fa-trash-alt'></i></button>                    
+                
+            </div>
+            <div id = 'range-container'>
+                <div class = 'range-container' id = "emoji-range-sliders">
+                    <form>
+                        <div class="form-group">
+                            <label for = "emoji-range" >Emoji Size: <span id = 'emoji-size-number'>72</span></label>
+                            <input id = "emoji-range" type="range" class="form-control-range" min = 10 max = 150 value = 72 step = 1>
+                        </div>
+                    </form>
+                </div>
+                <div class = 'range-container' id = "filter-sliders">
+                    <div class = 'filter-slider-indiv'>
+                        <form>
+                            <div class="form-group-left filter-boxes">
+                                <label>Blur:  &nbsp</label><input class = 'checkboxes' type = 'checkbox' id = 'blur-box'></input>
+                                <input id = "blur-range" type="range" class="filter-control-range" min = 0 max = 10 value = 0 step = 1
+                                style="width:85px">
+                            </div>
+                        </form>
+                    </div>
+                    <div class = 'filter-slider-indiv'>
+                        <form>
+                            <div class="form-group-left filter-boxes">
+                                    <label>Invert: &nbsp</label><input class = 'checkboxes' type = 'checkbox' id = 'invert-box'></input>
+                                <input id = "invert-range" type="range" class="filter-control-range filter-right" min = 0 max = 100 value = 0 step = 1
+                                 style="width:85px">
+                            </div>
+                        </form>
+                    </div>
+                    <div class = 'filter-slider-indiv'>
+                        <form>
+                            <div class="form-group-left filter-boxes">
+                                <label>Grayscale:  &nbsp</label><input class = 'checkboxes' type = 'checkbox' id = 'grayscale-box'></input>
+                                <input id = "grayscale-range" type="range" class="filter-control-range" min = 0 max = 100 value = 0 step = 1
+                                 style="width:85px">
+                            </div>
+                        </form>
+                    </div>
+                    <div class = 'filter-slider-indiv'>
+                        <form>
+                            <div class="form-group-right filter-boxes">
+                                <label>Opacity: &nbsp</label><input class = 'checkboxes' type = 'checkbox' id = 'opacity-box'></input>
+                                <input id = "opacity-range" type="range" class="filter-control-range" min = 0 max = 100 value = 100 step = 1
+                                 style="width:85px">
+                            </div>
+                        </form>
+                    </div>
+                    <div class = 'filter-slider-indiv'>
+                        <form>
+                            <div class="form-group-right filter-boxes">
+                                <label>Brightness:  &nbsp</label><input class = 'checkboxes' type = 'checkbox' id = 'brightness-box'></input>
+                                <input id = "brightness-range" type="range" class="filter-control-range" min = 0 max = 100 value = 100 step = 1
+                                 style="width:85px">
+                            </div>
+                        </form>
+                    </div>
+                    <div class = 'filter-slider-indiv'>
+                        <button id = 'remove-all'>Reset all</button>
+                    </div>
+                </div>
+                <div class = 'range-container' id = "font-range-sliders">
+                    <form>
+                        <div class="form-group">
+                            <label for = "font-range" >Font Size: <span id = 'font-size-number'>12</span></label>
+                            <input id = "font-range" type="range" class="form-control-range" min = 5 max = 52 value = 12 step = 1>
+                        </div>
+                        <div id = 'font-picker-div'>
+                            <p id = 'font-picker-text'><b>Select Font:</b></p>
+                            <select id = 'font-picker-selector'>
+                                <option value="Arial">Arial</option>
+                                <option value="Courier">Courier</option>
+                                <option value="Georgia">Georgia</option>
+                                <option value="Helvetica">Helvetica</option>
+                                <option value="Palatino">Palatino</option>
+                                <option value="Times">Times</option>
+                                <option value="Verdana">Verdana</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class = 'range-container' id = "brush-sliders">
+                    <form>
+                        <div class="form-group">
+                            <label for = "brush-range" >Pen Width: <span id = 'brush-size-number'>10</span></label>
+                            <input id = "brush-range" type="range" class="form-control-range" min = 1 max = 50 value = 10 step = 1>
+                        </div>
+                    </form>
+                    <div id="round-or-square">
+                        <spec id = 'dashed-div' class = 'style-switch'><input type="checkbox" id ="dashed-toggle" data-toggle="toggle" data-size= "mini" data-onstyle="warning" data-offstyle="info"
+                        data-on="Dashed" data-off="Solid" data-width='60'></spec>
+                        <spec id = 'rounded-div' class = 'style-switch'><input type="checkbox" id ="rounded-toggle" data-toggle="toggle" data-size= "mini" data-onstyle="warning" data-offstyle="info"
+                        data-on="Square"  data-off="Round" data-width='60'></spec>
+                    </div>    
+                </div>
+                <div id = "zoom-counter">Zoom: <spec id = 'bold-zoom-number'>100%</spec></div>
+                
+            </div>
+            <div id = "palette">
+                <div id = 'color-square'>
+                    <div class = "color-square-mini" id = "color-square-mini-1"></div>
+                    <div class = "color-square-mini" id = "color-square-mini-2"></div>
+                    <div class = "color-square-mini" id = "color-square-mini-3"></div>
+                    <div class = "color-square-mini" id = "color-square-mini-4"></div>
+                    <div class = "color-square-mini" id = "color-square-mini-5"></div>
+                    <div class = "color-square-mini" id = "color-square-mini-6"></div>
+                    <div class = "color-square-mini" id = "color-square-mini-7"></div>
+                    <div class = "color-square-mini" id = "color-square-mini-8"></div>
+                    <div class = "color-square-mini" id = "color-square-mini-9">-</div>
+                    <div class = "color-square-mini" id = "color-square-mini-10"></div>
+                    <div class = "color-square-mini" id = "color-square-mini-11"></div>
+                    <div class = "color-square-mini" id = "color-square-mini-12"></div>
+                    <div class = "color-square-mini" id = "color-square-mini-13"><input id = "color-picker"></div>
+                    <div class = "color-square-mini" id = "color-square-mini-14"></div>
+                    <div class = "color-square-mini" id = "color-square-mini-15"></div>
+                    <div class = "color-square-mini" id = "color-square-mini-16"></div>
+                </div>
+                <div id= 'emoji-square'>
+                    <div class = "emoji-square-mini" id = "emoji-square-mini-1"><img class= "emoji-image" id="pic1" src="./images/emoji/1.png"></div>
+                    <div class = "emoji-square-mini" id = "emoji-square-mini-2"><img class= "emoji-image" id="pic2" src="./images/emoji/2.png"></div>
+                    <div class = "emoji-square-mini" id = "emoji-square-mini-3"><img class= "emoji-image" id="pic3" src="./images/emoji/3.png"></div>
+                    <div class = "emoji-square-mini" id = "emoji-square-mini-4"><img class= "emoji-image" id="pic4" src="./images/emoji/4.png"></div>
+                    <div class = "emoji-square-mini" id = "emoji-square-mini-5"><img class= "emoji-image" id="pic5" src="./images/emoji/5.png"></div>
+                    <div class = "emoji-square-mini" id = "emoji-square-mini-6"><img class= "emoji-image" id="pic6" src="./images/emoji/6.png"></div>
+                    <div class = "emoji-square-mini" id = "emoji-square-mini-7"><img class= "emoji-image" id="pic7" src="./images/emoji/7.png"></div>
+                    <div class = "emoji-square-mini" id = "emoji-square-mini-8"><img class= "emoji-image" id="pic8" src="./images/emoji/8.png"></div>
+                    <div class = "emoji-square-mini" id = "emoji-square-mini-9"><img class= "emoji-image" id="pic9" src="./images/emoji/9.png"></div>
+                    <div class = "emoji-square-mini" id = "emoji-square-mini-10"><img class= "emoji-image" id="pic10" src="./images/emoji/10.png"></div>
+                    <div class = "emoji-square-mini" id = "emoji-square-mini-11"><img class= "emoji-image" id="pic11" src="./images/emoji/11.png"></div>
+                    <div class = "emoji-square-mini" id = "emoji-square-mini-12"><img class= "emoji-image" id="pic12" src="./images/emoji/12.png"></div>
+                    <div class = "emoji-square-mini" id = "emoji-square-mini-13"><img class= "emoji-image" id="pic13" src="./images/emoji/13.png"></div>
+                    <div class = "emoji-square-mini" id = "emoji-square-mini-14"><img class= "emoji-image" id="pic14" src="./images/emoji/14.png"></div>
+                    <div class = "emoji-square-mini" id = "emoji-square-mini-15"><img class= "emoji-image" id="pic15" src="./images/emoji/15.png"></div>
+                    <div class = "emoji-square-mini" id = "emoji-square-mini-16"><img class= "emoji-image" id="pic16" src="./images/emoji/16.png"></div>
+                    <!-- <div id = 'emoji-upload'>
+                        <i class="fa fa-upload" aria-hidden="true"></i> 
+                    </div>  -->
+                </div>
+                <div id = "current-color-holder">
+                    <div id =  "current-color-circle">
+                        <div id = "small-circle"></div>
+                        <div id = "big-circle"></div>
+                    </div>
+                    <div id = "current-color-square">
+                        <div id = "small-square"></div>
+                        <div id = "big-square"></div>
+                    </div>
+                    <div id = "current-color-line">
+                        <div id = "big-line"></div>
+                    </div>
+                    <div id = "current-color-dot">
+                        <div id = "big-dot"></div>
+                    </div>
+                    
+                    <div id = "current-color-polygon">
+                        <svg>
+                            <polygon id = 'polygon-image' points="10,12 10,65 65,10 68,65">
+                        </svg>
+                    </div>
+                    <div id = "current-curve">
+                        <svg>
+                            <path d="M 20 70 q 30 -60 60 0" 
+                            stroke-width="20" fill="none" />
+                        </svg>
+                    </div>
+                    <div class = "current-holder-small icon-image" id = "current-paint-bucket">
+                        <div id = "this-bucket"><i id = 'fill-bucket-icon' class="fas fa-fill-drip fa-5x icon-spotlight"></i></div>
+                    </div>
+                    <div class = "current-holder-small icon-image" id = "current-font">
+                        <div id = "this-font"><i id = 'font-icon' class="fas fa-font fa-5x icon-spotlight"></i></div>
+                    </div>
+                    <div class = "current-holder-small icon-image" id = "selector-icon">
+                        <div id = "this-selector"><i id = 'the-selector-icon' class="fas fa-object-ungroup fa-5x icon-spotlight"></i></div>
+                    </div>
+                    <div class = "current-holder-small icon-image" id = "filter-icon">
+                        <div id = "this-filter"><i id = 'the-filter-icon' class="fas fa-filter fa-5x icon-spotlight"></i></div>
+                    </div>
+                    <div class = "current-holder-small" id = "current-emoji">
+                        <div id = "this-emoji"><img id="this-emoji-picture" src="./images/emoji/1.png"></div>
+                    </div>
+            </div>
+        </section>
+
+
+
+        <script type='text/javascript' src="https://code.jquery.com/jquery-3.2.1.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
+        <script type='text/javascript' src="canvas-common.js"></script>
+        <script type='text/javascript' src="js/undo-redo.js"></script>
+        <script type='text/javascript' src="js/drawing-line.js"></script>
+        <script type='text/javascript' src="js/filter.js"></script> 
+        <script type='text/javascript' src="js/drawing-rectangle.js"></script>
+        <script type='text/javascript' src="js/drawing-circle.js"></script>
+        <script type='text/javascript' src="js/drawing-straight-line.js"></script>
+        <script type='text/javascript' src="js/drawing-curve.js"></script>
+        <script type='text/javascript' src="js/color-picker.js"></script> 
+        <script type='text/javascript' src="js/drawing-polygon.js"></script> 
+        <script type='text/javascript' src="js/text.js"></script>  
+        <script type='text/javascript' src="js/drawing-emoji.js"></script>    
+        <script type='text/javascript' src="js/selecting.js"></script>  
+        <script type='text/javascript' src="js/color-bucket.js"></script>  
+        <script type='text/javascript' src="js/zoom.js"></script>  
+        <script type='text/javascript' src="js/function-clicks.js"></script> 
+        
+        
+        
+
+        </script>
+    </body>
+</html>
+
